@@ -279,6 +279,9 @@ static void MX_NVIC_Init(void)
   /* UART4_IRQn interrupt configuration */
   NVIC_SetPriority(UART4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(UART4_IRQn);
+  /* TIM4_IRQn interrupt configuration */
+  NVIC_SetPriority(TIM4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(TIM4_IRQn);
 }
 
 /* USER CODE BEGIN 4 */

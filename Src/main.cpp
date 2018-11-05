@@ -1,5 +1,10 @@
 #include "cmain.h"
 
+uint16_t adcVal[2];
+static uint8_t adcValIndex = 0;
+
+extern uint32_t g_milliseconds;
+
 void Transmit(USART_TypeDef* uartx, uint8_t data)
 {
 	while (!LL_USART_IsActiveFlag_TXE(uartx));
@@ -13,17 +18,29 @@ void Transmit(USART_TypeDef* uartx, uint8_t* data, uint32_t byteCount)
 		Transmit(uartx, data[i]);
 }
 
-void GetADCValues()
+extern "C"
 {
-	volatile uint16_t adcVal1;
-	volatile uint16_t adcVal2;
-	LL_ADC_REG_StartConversion(ADC1);
-	while (!LL_ADC_IsActiveFlag_EOC(ADC1));
-	adcVal1 = LL_ADC_REG_ReadConversionData12(ADC1);
-	LL_ADC_ClearFlag_EOC(ADC1);
-	while (!LL_ADC_IsActiveFlag_EOC(ADC1));
-	adcVal2 = LL_ADC_REG_ReadConversionData12(ADC1);
-	LL_ADC_ClearFlag_EOC(ADC1);
+void ADC1_IT_Callback()
+{
+	if (LL_ADC_IsActiveFlag_EOC(ADC1))
+	{
+		adcVal[adcValIndex++] = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOC(ADC1);
+	}
+	if (LL_ADC_IsActiveFlag_EOS(ADC1))
+	{
+		adcValIndex=0;
+		LL_ADC_ClearFlag_EOS(ADC1);
+	}
+}
+}
+
+void MainLoop()
+{
+	if (adcValIndex == 0)
+		LL_ADC_REG_StartConversion(ADC1);
+
+	LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_10);
 }
 
 int main()
@@ -40,13 +57,15 @@ int main()
 
 	while(true)
 	{
-		if (LL_USART_IsActiveFlag_RXNE(USART3))
+		if (g_milliseconds%1000==0)
+			MainLoop();
+		/*if (LL_USART_IsActiveFlag_RXNE(USART3))
 		{
 			buffer[pos] = LL_USART_ReceiveData8(USART3);
 			Transmit(UART4, buffer[pos]);
 			pos = (pos+1) & 0x1f;
 		}
-		LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_10);
+		LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_10);*/
 	}
 }
 

@@ -36,6 +36,7 @@
 
 /* USER CODE BEGIN 0 */
 volatile uint8_t buffer[32];
+void ADC1_IT_Callback();
 
 /* USER CODE END 0 */
 
@@ -172,8 +173,10 @@ void PendSV_Handler(void)
 /**
 * @brief This function handles System tick timer.
 */
+uint32_t g_milliseconds = 0;
 void SysTick_Handler(void)
 {
+	g_milliseconds++;
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
@@ -195,6 +198,7 @@ void SysTick_Handler(void)
 */
 void ADC1_2_IRQHandler(void)
 {
+	ADC1_IT_Callback();
   /* USER CODE BEGIN ADC1_2_IRQn 0 */
 
   /* USER CODE END ADC1_2_IRQn 0 */
