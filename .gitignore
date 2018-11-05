@@ -3,7 +3,7 @@
 [Rr]elease/
 
 #latex files
-.pdf
-.log
-.aux
-.gz
+*.pdf
+*.log
+*.aux
+*.gz
