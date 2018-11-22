@@ -19,6 +19,8 @@ public:
 	Leg& getLegLB();
 	Leg& getLeg(uint32_t index);
 	std::array<Leg, 4>& getLegs();
+	void EnableLegs();
+	void DisableLegs();
 };
 
 } /* namespace quad */

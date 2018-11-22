@@ -68,35 +68,10 @@ static void MX_NVIC_Init(void);
 
 void Timer_PostInit()
 {
-	  LL_TIM_OC_SetCompareCH1(TIM1, 2000);
-	  LL_TIM_OC_SetCompareCH2(TIM1, 2000);
-	  LL_TIM_OC_SetCompareCH3(TIM1, 2000);
-	  LL_TIM_OC_SetCompareCH4(TIM1, 2000);
-	  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH1);
-	  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH2);
-	  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH3);
-	  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH4);
 	  LL_TIM_EnableCounter(TIM1);
-
-	  LL_TIM_OC_SetCompareCH1(TIM2, 2000);
-	  LL_TIM_OC_SetCompareCH2(TIM2, 2000);
-	  LL_TIM_OC_SetCompareCH3(TIM2, 2000);
-	  LL_TIM_OC_SetCompareCH4(TIM2, 2000);
-	  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1);
-	  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH2);
-	  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH3);
-	  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH4);
 	  LL_TIM_EnableCounter(TIM2);
-
-	  LL_TIM_OC_SetCompareCH1(TIM3, 2000);
-	  LL_TIM_OC_SetCompareCH2(TIM3, 2000);
-	  LL_TIM_OC_SetCompareCH3(TIM3, 2000);
-	  LL_TIM_OC_SetCompareCH4(TIM3, 2000);
-	  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1);
-	  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH2);
-	  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH3);
-	  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH4);
 	  LL_TIM_EnableCounter(TIM3);
+	  LL_TIM_EnableCounter(TIM4);
 }
 
 void ADC_PostInit()
@@ -195,6 +170,7 @@ static void LL_Init(void)
   * @brief System Clock Configuration
   * @retval None
   */
+#define EXTERNAL_CLOCK 0
 void SystemClock_Config(void)
 {
 
@@ -206,14 +182,27 @@ void SystemClock_Config(void)
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
 
+#if EXTERNAL_CLOCK == 1
   LL_RCC_HSE_Enable();
+#else
+  LL_RCC_HSI_Enable();
+#endif
 
    /* Wait till HSE is ready */
-  while(LL_RCC_HSE_IsReady() != 1)
-  {
-    
-  }
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
+#if EXTERNAL_CLOCK == 1
+  while(LL_RCC_HSE_IsReady() != 1);
+#else
+  while(LL_RCC_HSI_IsReady() != 1);
+#endif
+
+
+#if EXTERNAL_CLOCK == 1
+  uint32_t clockSrc = LL_RCC_PLLSOURCE_HSE;
+#else
+  uint32_t clockSrc = LL_RCC_PLLSOURCE_HSI;
+#endif
+
+  LL_RCC_PLL_ConfigDomain_SYS(clockSrc, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
 
   LL_RCC_PLL_EnableDomain_SYS();
 
@@ -224,7 +213,7 @@ void SystemClock_Config(void)
   {
     
   }
-  LL_RCC_PLLSAI1_ConfigDomain_ADC(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 8, LL_RCC_PLLSAI1R_DIV_2);
+  LL_RCC_PLLSAI1_ConfigDomain_ADC(clockSrc, LL_RCC_PLLM_DIV_1, 8, LL_RCC_PLLSAI1R_DIV_2);
 
   LL_RCC_PLLSAI1_EnableDomain_ADC();
 

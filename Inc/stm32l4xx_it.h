@@ -62,6 +62,7 @@ void SysTick_Handler(void);
 void ADC1_2_IRQHandler(void);
 void USART3_IRQHandler(void);
 void UART4_IRQHandler(void);
+void TIM4_IRQHandler(void);
 
 #ifdef __cplusplus
 }

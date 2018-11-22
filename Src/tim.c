@@ -306,9 +306,9 @@ void MX_TIM4_Init(void)
   /* Peripheral clock enable */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM4);
 
-  TIM_InitStruct.Prescaler = 79;
+  TIM_InitStruct.Prescaler = 99;
   TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
-  TIM_InitStruct.Autoreload = 19999;
+  TIM_InitStruct.Autoreload = 31999;
   TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
   LL_TIM_Init(TIM4, &TIM_InitStruct);
 
@@ -319,6 +319,8 @@ void MX_TIM4_Init(void)
   LL_TIM_SetTriggerOutput(TIM4, LL_TIM_TRGO_RESET);
 
   LL_TIM_DisableMasterSlaveMode(TIM4);
+
+  LL_TIM_EnableIT_UPDATE(TIM4);
 
 }
 

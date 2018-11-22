@@ -4,48 +4,142 @@
 namespace quad
 {
 
-Leg CreateLegRB()
+LegInitStruct GetLegRBInitStruct()
 {
-	return Leg(CreateServoRBbase(), CreateServoRBshoulder(), CreateServoRBknee(), LID_RB);
+	LegInitStruct lis;
+	lis.baseServo.timer = TIM1;
+	lis.baseServo.channel = TimerChannel::CHANNEL1;
+	lis.baseServo.assemblyOffset = 0.1f;
+	lis.shoulderServo.timer = TIM3;
+	lis.shoulderServo.channel = TimerChannel::CHANNEL4;
+	lis.shoulderServo.assemblyOffset = -0.1f;
+	lis.kneeServo.timer = TIM3;
+	lis.kneeServo.channel = TimerChannel::CHANNEL3;
+	lis.kneeServo.assemblyOffset = 0.0f;
+	lis.ox = 0.35f;
+	lis.oy = 0.21f;
+	lis.oz = -0.4f;
+	lis.o1 = 0.18f;
+	lis.o2 = 0.4f;
+	lis.o3 = 0.8f;
+	lis.o3x = -0.04f;
+	lis.a1 = mth::pi*0.75f;
+	lis.a2 = 0.0f;
+	lis.a3 = mth::pi*0.25f;
+	lis.dir1 = 1.0f;
+	lis.dir2 = -1.0f;
+	lis.dir3 = 1.0f;
+	return lis;
 }
-Leg CreateLegLB()
+LegInitStruct GetLegLBInitStruct()
 {
-	return Leg(CreateServoLBbase(), CreateServoLBshoulder(), CreateServoLBknee(), LID_LB);
+	LegInitStruct lis;
+	lis.baseServo.timer = TIM2;
+	lis.baseServo.channel = TimerChannel::CHANNEL4;
+	lis.baseServo.assemblyOffset = 0.0f;
+	lis.shoulderServo.timer = TIM3;
+	lis.shoulderServo.channel = TimerChannel::CHANNEL2;
+	lis.shoulderServo.assemblyOffset = -0.2f;
+	lis.kneeServo.timer = TIM3;
+	lis.kneeServo.channel = TimerChannel::CHANNEL1;
+	lis.kneeServo.assemblyOffset = 0.0f;
+	lis.ox = -0.35f;
+	lis.oy = 0.21f;
+	lis.oz = -0.4f;
+	lis.o1 = 0.18f;
+	lis.o2 = 0.4f;
+	lis.o3 = 0.8f;
+	lis.o3x = 0.04f;
+	lis.a1 = -mth::pi*0.75f;
+	lis.a2 = 0.0f;
+	lis.a3 = mth::pi*0.25f;
+	lis.dir1 = 1.0f;
+	lis.dir2 = 1.0f;
+	lis.dir3 = -1.0f;
+	return lis;
 }
-Leg CreateLegRF()
+LegInitStruct GetLegRFInitStruct()
 {
-	return Leg(CreateServoRFbase(), CreateServoRFshoulder(), CreateServoRFknee(), LID_RF);
+	LegInitStruct lis;
+	lis.baseServo.timer = TIM1;
+	lis.baseServo.channel = TimerChannel::CHANNEL4;
+	lis.baseServo.assemblyOffset = 0.0f;
+	lis.shoulderServo.timer = TIM1;
+	lis.shoulderServo.channel = TimerChannel::CHANNEL3;
+	lis.shoulderServo.assemblyOffset = 0.05f;
+	lis.kneeServo.timer = TIM1;
+	lis.kneeServo.channel = TimerChannel::CHANNEL2;
+	lis.kneeServo.assemblyOffset = -0.19f;
+	lis.ox = 0.35f;
+	lis.oy = 0.21f;
+	lis.oz = 0.4f;
+	lis.o1 = 0.18f;
+	lis.o2 = 0.4f;
+	lis.o3 = 0.8f;
+	lis.o3x = 0.04f;
+	lis.a1 = mth::pi*0.25f;
+	lis.a2 = 0.0f;
+	lis.a3 = mth::pi*0.25f;
+	lis.dir1 = 1.0f;
+	lis.dir2 = 1.0f;
+	lis.dir3 = -1.0f;
+	return lis;
 }
-Leg CreateLegLF()
+LegInitStruct GetLegLFInitStruct()
 {
-	return Leg(CreateServoLFbase(), CreateServoLFshoulder(), CreateServoLFknee(), LID_LF);
+	LegInitStruct lis;
+	lis.baseServo.timer = TIM2;
+	lis.baseServo.channel = TimerChannel::CHANNEL3;
+	lis.baseServo.assemblyOffset = -0.12f;
+	lis.shoulderServo.timer = TIM2;
+	lis.shoulderServo.channel = TimerChannel::CHANNEL2;
+	lis.shoulderServo.assemblyOffset = 0.0f;
+	lis.kneeServo.timer = TIM2;
+	lis.kneeServo.channel = TimerChannel::CHANNEL1;
+	lis.kneeServo.assemblyOffset = -0.1f;
+	lis.ox = -0.35f;
+	lis.oy = 0.21f;
+	lis.oz = 0.4f;
+	lis.o1 = 0.18f;
+	lis.o2 = 0.4f;
+	lis.o3 = 0.8f;
+	lis.o3x = -0.04f;
+	lis.a1 = -mth::pi*0.25f;
+	lis.a2 = 0.0f;
+	lis.a3 = mth::pi*0.25f;
+	lis.dir1 = 1.0f;
+	lis.dir2 = -1.0f;
+	lis.dir3 = 1.0f;
+	return lis;
 }
 
-Leg::Leg(Servo base, Servo knee, Servo shoulder, LegID leg)
-:m_base(base),m_shoulder(shoulder),m_knee(knee)
+Leg::Leg(LegInitStruct lis)
+:m_base(lis.baseServo),
+ m_shoulder(lis.shoulderServo),
+ m_knee(lis.kneeServo)
 {
-	switch (leg)
-	{
-	case LID_RF:
-		InitRF();
-		break;
-	case LID_RB:
-		InitRB();
-		break;
-	case LID_LF:
-		InitLF();
-		break;
-	case LID_LB:
-		InitLB();
-		break;
-	}
+	m_ox = lis.ox;
+	m_oy = lis.oy;
+	m_oz = lis.oz;
+	m_o1 = lis.o1;
+	m_o2 = lis.o2;
+	m_o3 = lis.o3;
+	m_o3x = lis.o3x;
+	m_a1 = lis.a1;
+	m_a2 = lis.a2;
+	m_a3 = lis.a3;
+	m_dir1 = lis.dir1;
+	m_dir2 = lis.dir2;
+	m_dir3 = lis.dir3;
+
+	setJointStates(mth::float3());
 }
 
 void Leg::SetJointRotation()
 {
-	m_base.setState(m_a1 + m_joints[m_chosenJoint].x);
-	m_shoulder.setState(m_a2 + m_joints[m_chosenJoint].y);
-	m_knee.setState(m_a3 + m_joints[m_chosenJoint].z);
+	m_base.setState(m_dir1*m_joints[m_chosenJoint].x);
+	m_shoulder.setState(m_dir2*m_joints[m_chosenJoint].y);
+	m_knee.setState(m_dir3*m_joints[m_chosenJoint].z);
 }
 
 void Leg::ForwardGeometry()
@@ -116,7 +210,7 @@ bool Leg::InverseShoulderAngle()
 	return true;
 }
 
-void Leg::CalculateKneeAngle(int index, float l)
+void Leg::CalculateKneeAngle(uint32_t index, float l)
 {
 	if (m_valid[index])
 	{
@@ -146,90 +240,13 @@ void Leg::InverseGeometry()
 			InverseKneeAngle();
 }
 
-void Leg::InitRF()
-{
-	m_ox = 0.35f;
-	m_oy = 0.21f;
-	m_oz = 0.4f;
-	m_o1 = 0.18f;
-	m_o2 = 0.4f;
-	m_o3 = 0.8f;
-	m_o3x = 0.04f;
-	m_a1 = mth::pi*0.25f;
-	m_a2 = 0.0f;
-	m_a3 = mth::pi*0.25f;
-
-	m_base.setState(m_a1);
-	m_shoulder.setState(m_a2);
-	m_knee.setState(m_a3);
-
-	setJointStates(0);
-}
-void Leg::InitLF()
-{
-	m_ox = -0.35f;
-	m_oy = 0.21f;
-	m_oz = 0.4f;
-	m_o1 = 0.18f;
-	m_o2 = 0.4f;
-	m_o3 = 0.8f;
-	m_o3x = -0.04f;
-	m_a1 = -mth::pi*0.25f;
-	m_a2 = 0.0f;
-	m_a3 = mth::pi*0.25f;
-
-	m_base.setState(m_a1);
-	m_shoulder.setState(m_a2);
-	m_knee.setState(m_a3);
-
-	setJointStates(0);
-}
-void Leg::InitRB()
-{
-	m_ox = 0.35f;
-	m_oy = 0.21f;
-	m_oz = -0.4f;
-	m_o1 = 0.18f;
-	m_o2 = 0.4f;
-	m_o3 = 0.8f;
-	m_o3x = -0.04f;
-	m_a1 = mth::pi*0.75f;
-	m_a2 = 0.0f;
-	m_a3 = mth::pi*0.25f;
-
-	m_base.setState(m_a1);
-	m_shoulder.setState(m_a2);
-	m_knee.setState(m_a3);
-
-	setJointStates(0);
-}
-void Leg::InitLB()
-{
-	m_ox = -0.35f;
-	m_oy = 0.21f;
-	m_oz = -0.4f;
-	m_o1 = 0.18f;
-	m_o2 = 0.4f;
-	m_o3 = 0.8f;
-	m_o3x = 0.04f;
-	m_a1 = -mth::pi*0.75f;
-	m_a2 = 0.0f;
-	m_a3 = mth::pi*0.25f;
-
-	m_base.setState(m_a1);
-	m_shoulder.setState(m_a2);
-	m_knee.setState(m_a3);
-
-	setJointStates(0);
-}
-
 void Leg::setJointStates(mth::float3 joints)
 {
 	m_joints[0] = joints;
 	ForwardGeometry();
 	SetJointRotation();
 }
-void Leg::setJointStates(int index)
+void Leg::setJointStates(uint32_t index)
 {
 	m_chosenJoint = index;
 	SetJointRotation();
@@ -238,7 +255,7 @@ mth::float3 Leg::getJointStates()
 {
 	return m_joints;
 }
-mth::float3 Leg::getJointStates(int index)
+mth::float3 Leg::getJointStates(uint32_t index)
 {
 	return m_joints[index];
 }
@@ -246,7 +263,7 @@ bool Leg::isValid()
 {
 	return m_chosenJoint > 0;
 }
-bool Leg::isValid(int index)
+bool Leg::isValid(uint32_t index)
 {
 	return m_valid[index];
 }
@@ -269,6 +286,30 @@ mth::float3 Leg::getPosition()
 void Leg::MovePosition(mth::float3 delta)
 {
 	setPosition(m_position + delta);
+}
+void Leg::Enable()
+{
+	m_base.Enable();
+	m_shoulder.Enable();
+	m_knee.Enable();
+}
+void Leg::Disable()
+{
+	m_base.Disable();
+	m_shoulder.Disable();
+	m_knee.Disable();
+}
+Servo& Leg::getBaseServo()
+{
+	return m_base;
+}
+Servo& Leg::getShoulderServo()
+{
+	return m_shoulder;
+}
+Servo& Leg::getKneeServo()
+{
+	return m_knee;
 }
 
 }

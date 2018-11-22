@@ -1,9 +1,9 @@
 #include "cmain.h"
+#include "quad/walkscript.h"
+#include <cmath>
 
 uint16_t adcVal[2];
 static uint8_t adcValIndex = 0;
-
-extern uint32_t g_milliseconds;
 
 void Transmit(USART_TypeDef* uartx, uint8_t data)
 {
@@ -33,45 +33,55 @@ void ADC1_IT_Callback()
 		LL_ADC_ClearFlag_EOS(ADC1);
 	}
 }
-}
-
-void MainLoop()
-{
-	if (adcValIndex == 0)
-		LL_ADC_REG_StartConversion(ADC1);
-
-	LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_10);
+uint8_t TryUpdate();
 }
 
 int main()
 {
-	volatile uint8_t buffer[32]{};
-	volatile uint32_t pos = 0;
 	Init();
 
-	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_6);
-	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_7);
+	quad::Quadruped q;
+	quad::WalkManager walkm;
 
-	Transmit(USART3, (uint8_t*)"AT+GMR", 6);
+	q.getLegRF().setPosition(mth::float3(0.9f, -0.35f, 0.9f));
+	q.getLegLF().setPosition(mth::float3(-0.9f, -0.35f, 0.9f));
+	q.getLegRB().setPosition(mth::float3(0.9f, -0.35f, -0.9f));
+	q.getLegLB().setPosition(mth::float3(-0.9f, -0.35f, -0.9f));
 
+	walkm.Init(&q);
 
+	q.EnableLegs();
+
+	uint32_t counter = 0;
+	float time = 0.0f;
 	while(true)
 	{
-		if (g_milliseconds%1000==0)
-			MainLoop();
-		/*if (LL_USART_IsActiveFlag_RXNE(USART3))
+
+		if (TryUpdate())
 		{
-			buffer[pos] = LL_USART_ReceiveData8(USART3);
-			Transmit(UART4, buffer[pos]);
-			pos = (pos+1) & 0x1f;
+			time = fmodf(time + 0.02f, mth::pi*2.0f);
+			float lift = sinf(time)*0.1f - 0.35f;
+
+			q.getLegRF().setPosition(mth::float3(0.9f, lift, 0.9f));
+			q.getLegLF().setPosition(mth::float3(-0.9f, lift, 0.9f));
+			q.getLegRB().setPosition(mth::float3(0.9f, lift, -0.9f));
+			q.getLegLB().setPosition(mth::float3(-0.9f, lift, -0.9f));
+			//walkm.Update(0.02f);
+			if (++counter == 50)
+			{
+				counter = 0;
+				//walkm.Update(1.0f);
+				LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_10);
+			}
 		}
-		LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_10);*/
+
+		/*for (volatile uint32_t i = 0; i < 10000000; i++);
+		LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_10);
+		for (volatile uint32_t i = 0; i < 10000000; i++);
+		LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_10);*/
 	}
 }
 
-/*
- * interupt tiltás freertos
- * */
 
 
 

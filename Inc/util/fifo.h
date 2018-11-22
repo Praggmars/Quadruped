@@ -30,7 +30,7 @@ public:
 		{
 			m_buffer[m_end] = t;
 			m_end = (m_end + 1) % S;
-			m_size--;
+			m_size++;
 			return true;
 		}
 		return false;
@@ -41,7 +41,7 @@ public:
 			return false;
 		t = m_buffer[m_begin];
 		m_begin = (m_begin + 1) % S;
-		m_size++;
+		m_size--;
 		return true;
 	}
 

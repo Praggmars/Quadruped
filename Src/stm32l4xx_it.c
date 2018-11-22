@@ -247,6 +247,23 @@ void UART4_IRQHandler(void)
 
   /* USER CODE END UART4_IRQn 1 */
 }
+uint8_t g_updateReady = 0;
+
+uint8_t TryUpdate()
+{
+	if (g_updateReady)
+	{
+		g_updateReady = 0;
+		return 1;
+	}
+	return 0;
+}
+
+void TIM4_IRQHandler(void)
+{
+	g_updateReady = 1;
+	LL_TIM_ClearFlag_UPDATE(TIM4);
+}
 
 /* USER CODE BEGIN 1 */
 

@@ -3,8 +3,10 @@
 namespace quad
 {
 Quadruped::Quadruped()
-:m_legs({CreateLegRF(),CreateLegLF(),CreateLegRB(),CreateLegLB()})
-{}
+:m_legs({Leg(GetLegRFInitStruct()),Leg(GetLegLFInitStruct()),Leg(GetLegRBInitStruct()),Leg(GetLegLBInitStruct())})
+{
+	//DisableLegs();
+}
 Leg& Quadruped::getLegRF()
 {
 	return m_legs[LID_RF];
@@ -28,6 +30,16 @@ Leg& Quadruped::getLeg(uint32_t index)
 std::array<Leg, 4>& Quadruped::getLegs()
 {
 	return m_legs;
+}
+void Quadruped::EnableLegs()
+{
+	for (auto& l : m_legs)
+		l.Enable();
+}
+void Quadruped::DisableLegs()
+{
+	for (auto& l : m_legs)
+		l.Disable();
 }
 
 } /* namespace quad */

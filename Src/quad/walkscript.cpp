@@ -170,7 +170,7 @@ void WalkManager::Init(Quadruped *quadruped)
 	m_script.Clear();
 	m_quad = quadruped;
 	m_time = 0.0f;
-	m_speed = 3.5f;
+	m_speed = 1.0f;
 	m_running = false;
 	m_quad->getLegRF().setPosition(m_script.getLegRFStartPos());
 	m_quad->getLegRB().setPosition(m_script.getLegRBStartPos());
