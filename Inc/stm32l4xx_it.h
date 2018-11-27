@@ -64,6 +64,8 @@ void USART3_IRQHandler(void);
 void UART4_IRQHandler(void);
 void TIM4_IRQHandler(void);
 
+uint8_t TryUpdate();
+
 #ifdef __cplusplus
 }
 #endif

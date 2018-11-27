@@ -35,8 +35,6 @@
 #include "stm32l4xx_it.h"
 
 /* USER CODE BEGIN 0 */
-volatile uint8_t buffer[32];
-void ADC1_IT_Callback();
 
 /* USER CODE END 0 */
 
@@ -173,10 +171,8 @@ void PendSV_Handler(void)
 /**
 * @brief This function handles System tick timer.
 */
-uint32_t g_milliseconds = 0;
 void SysTick_Handler(void)
 {
-	g_milliseconds++;
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
@@ -196,16 +192,22 @@ void SysTick_Handler(void)
 /**
 * @brief This function handles ADC1 and ADC2 interrupts.
 */
+static uint16_t adcVal[2];
+static uint8_t adcValIndex = 0;
 void ADC1_2_IRQHandler(void)
 {
-	ADC1_IT_Callback();
-  /* USER CODE BEGIN ADC1_2_IRQn 0 */
-
-  /* USER CODE END ADC1_2_IRQn 0 */
-  
-  /* USER CODE BEGIN ADC1_2_IRQn 1 */
-
-  /* USER CODE END ADC1_2_IRQn 1 */
+	if (LL_ADC_IsActiveFlag_EOC(ADC1))
+	{
+		LL_ADC_ClearFlag_EOC(ADC1);
+		adcVal[adcValIndex++] = LL_ADC_REG_ReadConversionData12(ADC1);
+	}
+	if (LL_ADC_IsActiveFlag_EOS(ADC1))
+	{
+		LL_ADC_ClearFlag_EOS(ADC1);
+		adcValIndex = 0;
+		if (adcVal[0] < 2500)	//akku merül
+			LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_12);
+	}
 }
 
 /**
@@ -213,24 +215,17 @@ void ADC1_2_IRQHandler(void)
 */
 void USART3_IRQHandler(void)
 {
-	static uint8_t pos = 0;
-	if (LL_USART_IsActiveFlag_RXNE(USART3) && LL_USART_IsEnabledIT_RXNE(USART3))
+	/* külön osztály interrupthandler függvénnyel */
+	if (LL_USART_IsActiveFlag_RXNE(USART3))
 	{
-		LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_3);
-		buffer[pos] = LL_USART_ReceiveData8(USART3);
-		LL_USART_TransmitData8(UART4, buffer[pos]);
-		pos = (pos+1) & 0x1f;
+
 	}
-	else
+	if (LL_USART_IsActiveFlag_TXE(USART3))
 	{
-		LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_3);
+		//ha küldés indul enableIT, ha vége, DisableIT
+		LL_USART_ClearFlag_TC(USART3);
+		LL_USART_DisableIT_TXE(USART3);
 	}
-  /* USER CODE BEGIN USART3_IRQn 0 */
-
-  /* USER CODE END USART3_IRQn 0 */
-  /* USER CODE BEGIN USART3_IRQn 1 */
-
-  /* USER CODE END USART3_IRQn 1 */
 }
 
 /**
@@ -238,17 +233,18 @@ void USART3_IRQHandler(void)
 */
 void UART4_IRQHandler(void)
 {
-  /* USER CODE BEGIN UART4_IRQn 0 */
-	//txe flag küldésnél
-	//fifo, ha üres, txe kikapcsolása
+	if (LL_USART_IsActiveFlag_RXNE(UART4))
+	{
 
-  /* USER CODE END UART4_IRQn 0 */
-  /* USER CODE BEGIN UART4_IRQn 1 */
-
-  /* USER CODE END UART4_IRQn 1 */
+	}
+	if (LL_USART_IsActiveFlag_TXE(UART4))
+	{
+		LL_USART_ClearFlag_TC(UART4);
+		LL_USART_DisableIT_TXE(UART4);
+	}
 }
-uint8_t g_updateReady = 0;
 
+static uint8_t g_updateReady = 0;
 uint8_t TryUpdate()
 {
 	if (g_updateReady)

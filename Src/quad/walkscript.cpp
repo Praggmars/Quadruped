@@ -13,7 +13,7 @@ void WalkScript::AddPathElementLegMovement(LegID legid, mth::float2 pos)
 	qa.goalPos = pos;
 	m_script.push(qa);
 }
-void WalkScript::AddPathElementBodyMovement(mth::float2 pos, float_t turn)
+void WalkScript::AddPathElementBodyMovement(mth::float2 pos, float turn)
 {
 	QuadAction qa;
 	qa.legID = -1;
@@ -36,9 +36,9 @@ void WalkScript::AddLegTurnLeftBalanced(mth::float2x2 rotmat)
 	AddPathElementLegMovement(LID_LF, rotmat * mth::float2(-m_legXPos, m_legZRetracted + m_legStretchHalf));
 	AddPathElementLegMovement(LID_LB, rotmat * mth::float2(-m_legXPos, -(m_legZRetracted + m_legStretchHalf)));
 }
-void WalkScript::AddLegBodyElementsTurn(float_t angle)
+void WalkScript::AddLegBodyElementsTurn(float angle)
 {
-	float_t ratio = MIN(fabsf(angle) / m_maxTurnAtOnce, 1.0f);
+	float ratio = MIN(fabsf(angle) / m_maxTurnAtOnce, 1.0f);
 	if (angle < 0.0f)
 		ratio = -ratio;
 	mth::float2x2 rotmat = mth::float2x2::Rotation(-ratio * m_maxTurnAtOnce);
@@ -50,21 +50,21 @@ void WalkScript::AddLegBodyElementsTurn(float_t angle)
 	AddPathElementBodyMovement(mth::float2(), m_maxTurnAtOnce * ratio);
 }
 
-void WalkScript::AddLegWalkStraightRightBalanced(float_t ratio)
+void WalkScript::AddLegWalkStraightRightBalanced(float ratio)
 {
 	AddPathElementLegMovement(LID_LB, mth::float2(-m_legXPos, -m_legZRetracted - (1.0f - ratio)*m_legStretchHalf));
 	AddPathElementLegMovement(LID_LF, mth::float2(-m_legXPos, m_legZRetracted + 2.0f*m_legStretchHalf - (1.0f - ratio)*m_legStretchHalf));
 	m_rightBalanced = false;
 }
-void WalkScript::AddLegWalkStraightLeftBalanced(float_t ratio)
+void WalkScript::AddLegWalkStraightLeftBalanced(float ratio)
 {
 	AddPathElementLegMovement(LID_RB, mth::float2(m_legXPos, -m_legZRetracted - (1.0f - ratio)*m_legStretchHalf));
 	AddPathElementLegMovement(LID_RF, mth::float2(m_legXPos, m_legZRetracted + 2.0f*m_legStretchHalf - (1.0f - ratio)*m_legStretchHalf));
 	m_rightBalanced = true;
 }
-void WalkScript::AddLegBodyElementsWalkStraight(float_t distance)
+void WalkScript::AddLegBodyElementsWalkStraight(float distance)
 {
-	float_t ratio = MIN(distance / m_legStretchHalf, 1.0f);
+	float ratio = MIN(distance / m_legStretchHalf, 1.0f);
 	if (m_rightBalanced)
 		AddLegWalkStraightRightBalanced(ratio);
 	else
@@ -72,18 +72,18 @@ void WalkScript::AddLegBodyElementsWalkStraight(float_t distance)
 	AddPathElementBodyMovement(mth::float2(0.0f, m_legStretchHalf*ratio), 0.0f);
 }
 
-WalkScript::WalkScript() :
-	m_maxTurnAtOnce(mth::pi*0.25f),
-	m_bellyy(0.3f),
+WalkScript::WalkScript()
+:	m_maxTurnAtOnce(mth::pi*0.125f),
+	m_bellyy(0.4f),
 	m_legLift(0.2f),
-	m_legXPos(0.9f),
-	m_legZRetracted(0.4f),
+	m_legXPos(0.8f),
+	m_legZRetracted(0.3f),
 	m_legStretchHalf(0.5f),
 	m_rightBalanced(true) {}
 
-void WalkScript::AddPathElementTurn(float_t angle)
+void WalkScript::AddPathElementTurn(float angle)
 {
-	float_t angleabs = fabsf(angle);
+	float angleabs = fabsf(angle);
 	while (angleabs > 0.0f)
 	{
 		AddLegBodyElementsTurn(angle);
@@ -95,7 +95,7 @@ void WalkScript::AddPathElementTurn(float_t angle)
 	}
 }
 
-void WalkScript::AddPathElementWalkStraight(float_t distance)
+void WalkScript::AddPathElementWalkStraight(float distance)
 {
 	while (distance > 0.0f)
 	{
@@ -109,10 +109,10 @@ void WalkScript::Clear()
 	m_script.clear();
 }
 
-void WalkScript::AddPathElementCircle(float_t circleR, float_t rotation)
+void WalkScript::AddPathElementCircle(float circleR, float rotation)
 {
-	float_t rotabs = fabsf(rotation);
-	float_t rotpermove = m_legStretchHalf / circleR;
+	float rotabs = fabsf(rotation);
+	float rotpermove = m_legStretchHalf / circleR;
 	mth::float2x2 rotmat = mth::float2x2::Rotation(rotpermove);
 	QuadAction qa;
 	while (rotabs > 0.0f)
@@ -154,11 +154,11 @@ mth::float3 WalkScript::getLegLBStartPos()
 {
 	return mth::float3({ -m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
 }
-float_t WalkScript::getBellyY()
+float WalkScript::getBellyY()
 {
 	return m_bellyy;
 }
-float_t WalkScript::LegY(float_t t)
+float WalkScript::LegY(float t)
 {
 	t = 2.0f*t - 1.0f;
 	return -m_bellyy + (1.0f - t * t)*m_legLift;
@@ -170,7 +170,7 @@ void WalkManager::Init(Quadruped *quadruped)
 	m_script.Clear();
 	m_quad = quadruped;
 	m_time = 0.0f;
-	m_speed = 1.0f;
+	m_speed = 2.0f;
 	m_running = false;
 	m_quad->getLegRF().setPosition(m_script.getLegRFStartPos());
 	m_quad->getLegRB().setPosition(m_script.getLegRBStartPos());
@@ -178,7 +178,7 @@ void WalkManager::Init(Quadruped *quadruped)
 	m_quad->getLegLB().setPosition(m_script.getLegLBStartPos());
 }
 
-void WalkManager::MoveBody(float_t deltaTime)
+void WalkManager::MoveBody(float deltaTime)
 {
 	mth::float3 delta = { -deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
 	delta = mth::float3x3::RotationY(m_action.rot)*delta;
@@ -207,7 +207,7 @@ void WalkManager::ReceiveNextAction()
 		}
 	}
 }
-float_t WalkManager::FinishPreviousAction(float_t timeLeft)
+float WalkManager::FinishPreviousAction(float timeLeft)
 {
 	if (m_action.legID < 0)
 		MoveBody(timeLeft);
@@ -217,7 +217,7 @@ float_t WalkManager::FinishPreviousAction(float_t timeLeft)
 	m_time = fmodf(m_time, 1.0f);
 	return m_time;
 }
-void WalkManager::ExecuteAction(float_t deltaTime)
+void WalkManager::ExecuteAction(float deltaTime)
 {
 	m_time += deltaTime;
 	if (m_time >= 1.0f)
@@ -227,7 +227,7 @@ void WalkManager::ExecuteAction(float_t deltaTime)
 	else
 		MoveLeg();
 }
-void WalkManager::Update(float_t deltaTime)
+void WalkManager::Update(float deltaTime)
 {
 	if (!m_running)
 	{

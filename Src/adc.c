@@ -85,9 +85,9 @@ void MX_ADC1_Init(void)
 
   LL_ADC_SetOverSamplingScope(ADC1, LL_ADC_OVS_DISABLE);
 
-  LL_ADC_DisableIT_EOC(ADC1);
+  LL_ADC_EnableIT_EOC(ADC1);
 
-  LL_ADC_DisableIT_EOS(ADC1);
+  LL_ADC_EnableIT_EOS(ADC1);
 
   ADC_CommonInitStruct.CommonClock = LL_ADC_CLOCK_SYNC_PCLK_DIV2;
   ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;

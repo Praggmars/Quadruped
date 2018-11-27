@@ -79,10 +79,11 @@ void MX_UART4_Init(void)
   LL_USART_ConfigAsyncMode(UART4);
 
   LL_USART_Enable(UART4);
-  //LL_USART_EnableIT_RXNE(UART4);
 
+  LL_USART_DisableIT_RXNE(UART4);
+  LL_USART_DisableIT_TXE(UART4);
 
-  //while((!(LL_USART_IsActiveFlag_TEACK(UART4))) || (!(LL_USART_IsActiveFlag_REACK(UART4))));
+  while((!(LL_USART_IsActiveFlag_TEACK(UART4))) || (!(LL_USART_IsActiveFlag_REACK(UART4))));
 
 }
 /* USART3 init function */
@@ -119,7 +120,8 @@ void MX_USART3_UART_Init(void)
   LL_USART_ConfigAsyncMode(USART3);
 
   LL_USART_Enable(USART3);
-  //LL_USART_EnableIT_RXNE(USART3);
+  LL_USART_DisableIT_RXNE(USART3);
+  LL_USART_DisableIT_TXE(USART3);
 
 
   while((!(LL_USART_IsActiveFlag_TEACK(USART3))) || (!(LL_USART_IsActiveFlag_REACK(USART3))));
@@ -127,7 +129,14 @@ void MX_USART3_UART_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+void SendMessage(USART_TypeDef *uart)
+{
 
+}
+uint32_t RecvMessage(USART_TypeDef *uart, uint8_t dst[], uint32_t maxSize)
+{
+	return 0;
+}
 /* USER CODE END 1 */
 
 /**

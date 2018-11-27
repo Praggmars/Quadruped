@@ -9,12 +9,12 @@ namespace mth
 	{
 		memset(this, 0, sizeof(*this));
 	}
-	float2::float2(const float_t f) : x(f), y(f) {}
-	float2::float2(const float_t * const v)
+	float2::float2(const float f) : x(f), y(f) {}
+	float2::float2(const float * const v)
 	{
 		memcpy(this, v, sizeof(float2));
 	}
-	float2::float2(const float_t x, const float_t y) : x(x), y(y) {}
+	float2::float2(const float x, const float y) : x(x), y(y) {}
 	float2::float2(const float2& v)
 	{
 		memcpy(this, &v, sizeof(float2));
@@ -27,15 +27,15 @@ namespace mth
 	{
 		return x == 0.0f && y == 0.0f;
 	}
-	float_t float2::Dot(const float2 v) const
+	float float2::Dot(const float2 v) const
 	{
 		return x * v.x + y * v.y;
 	}
-	float_t float2::LengthSquare() const
+	float float2::LengthSquare() const
 	{
 		return x * x + y * y;
 	}
-	float_t float2::Length() const
+	float float2::Length() const
 	{
 		return sqrtf(LengthSquare());
 	}
@@ -68,19 +68,19 @@ namespace mth
 	{
 		return float2(x / v.x, y / v.y);
 	}
-	float2 float2::operator+(const float_t f) const
+	float2 float2::operator+(const float f) const
 	{
 		return float2(x + f, y + f);
 	}
-	float2 float2::operator-(const float_t f) const
+	float2 float2::operator-(const float f) const
 	{
 		return float2(x - f, y - f);
 	}
-	float2 float2::operator*(const float_t f) const
+	float2 float2::operator*(const float f) const
 	{
 		return float2(x * f, y * f);
 	}
-	float2 float2::operator/(const float_t f) const
+	float2 float2::operator/(const float f) const
 	{
 		return float2(x / f, y / f);
 	}
@@ -117,31 +117,31 @@ namespace mth
 		memcpy(this, &v, sizeof(float2));
 		return *this;
 	}
-	float2& float2::operator+=(const float_t f)
+	float2& float2::operator+=(const float f)
 	{
 		x += f;
 		y += f;
 		return *this;
 	}
-	float2& float2::operator-=(const float_t f)
+	float2& float2::operator-=(const float f)
 	{
 		x -= f;
 		y -= f;
 		return *this;
 	}
-	float2& float2::operator*=(const float_t f)
+	float2& float2::operator*=(const float f)
 	{
 		x *= f;
 		y *= f;
 		return *this;
 	}
-	float2& float2::operator/=(const float_t f)
+	float2& float2::operator/=(const float f)
 	{
 		x /= f;
 		y /= f;
 		return *this;
 	}
-	float2& float2::operator=(const float_t f)
+	float2& float2::operator=(const float f)
 	{
 		x = f;
 		y = f;
@@ -151,13 +151,13 @@ namespace mth
 	{
 		return float2(x * m(0, 0) + y * m(1, 0), x * m(0, 1) + y * m(1, 1));
 	}
-	float_t float2::operator()(const int i) const
+	float float2::operator()(const int i) const
 	{
-		return ((float_t*)((void*)this))[i];
+		return ((float*)((void*)this))[i];
 	}
-	float_t& float2::operator()(const int i)
+	float& float2::operator()(const int i)
 	{
-		return ((float_t*)((void*)this))[i];
+		return ((float*)((void*)this))[i];
 	}
 	float2::operator float3() const
 	{
@@ -167,9 +167,9 @@ namespace mth
 	{
 		return float4(x, y, 1.0f, 1.0f);
 	}
-	float2::operator float_t*() const
+	float2::operator float*() const
 	{
-		return (float_t*)((void*)this);
+		return (float*)((void*)this);
 	}
 
 
@@ -177,12 +177,12 @@ namespace mth
 	{
 		memset(this, 0, sizeof(float3));
 	}
-	float3::float3(const float_t f) : x(f), y(f), z(f) {}
-	float3::float3(const float_t * const v)
+	float3::float3(const float f) : x(f), y(f), z(f) {}
+	float3::float3(const float * const v)
 	{
 		memcpy(this, v, sizeof(float3));
 	}
-	float3::float3(const float_t x, const float_t y, const float_t z) : x(x), y(y), z(z) {}
+	float3::float3(const float x, const float y, const float z) : x(x), y(y), z(z) {}
 	float3::float3(const float3& v)
 	{
 		memcpy(this, &v, sizeof(float3));
@@ -195,7 +195,7 @@ namespace mth
 	{
 		return x == 0.0f && y == 0.0f &&z == 0.0f;
 	}
-	float_t float3::Dot(const float3 v) const
+	float float3::Dot(const float3 v) const
 	{
 		return x * v.x + y * v.y + z * v.z;
 	}
@@ -203,11 +203,11 @@ namespace mth
 	{
 		return float3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
 	}
-	float_t float3::LengthSquare() const
+	float float3::LengthSquare() const
 	{
 		return x * x + y * y + z * z;
 	}
-	float_t float3::Length() const
+	float float3::Length() const
 	{
 		return sqrtf(LengthSquare());
 	}
@@ -241,19 +241,19 @@ namespace mth
 	{
 		return float3(x / v.x, y / v.y, z / v.z);
 	}
-	float3 float3::operator+(const float_t f) const
+	float3 float3::operator+(const float f) const
 	{
 		return float3(x + f, y + f, z + f);
 	}
-	float3 float3::operator-(const float_t f) const
+	float3 float3::operator-(const float f) const
 	{
 		return float3(x - f, y - f, z - f);
 	}
-	float3 float3::operator*(const float_t f) const
+	float3 float3::operator*(const float f) const
 	{
 		return float3(x * f, y * f, z * f);
 	}
-	float3 float3::operator/(const float_t f) const
+	float3 float3::operator/(const float f) const
 	{
 		return float3(x / f, y / f, z / f);
 	}
@@ -294,35 +294,35 @@ namespace mth
 		memcpy(this, &v, sizeof(float3));
 		return *this;
 	}
-	float3& float3::operator+=(const float_t f)
+	float3& float3::operator+=(const float f)
 	{
 		x += f;
 		y += f;
 		z += f;
 		return *this;
 	}
-	float3& float3::operator-=(const float_t f)
+	float3& float3::operator-=(const float f)
 	{
 		x -= f;
 		y -= f;
 		z -= f;
 		return *this;
 	}
-	float3& float3::operator*=(const float_t f)
+	float3& float3::operator*=(const float f)
 	{
 		x *= f;
 		y *= f;
 		z *= f;
 		return *this;
 	}
-	float3& float3::operator/=(const float_t f)
+	float3& float3::operator/=(const float f)
 	{
 		x /= f;
 		y /= f;
 		z /= f;
 		return *this;
 	}
-	float3 & float3::operator=(const float_t f)
+	float3 & float3::operator=(const float f)
 	{
 		x = f;
 		y = f;
@@ -336,13 +336,13 @@ namespace mth
 			x * m(0, 1) + y * m(1, 1) + z * m(2, 1),
 			x * m(0, 2) + y * m(1, 2) + z * m(2, 2));
 	}
-	float_t float3::operator()(const int i) const
+	float float3::operator()(const int i) const
 	{
-		return ((float_t*)((void*)this))[i];
+		return ((float*)((void*)this))[i];
 	}
-	float_t& float3::operator()(const int i)
+	float& float3::operator()(const int i)
 	{
-		return ((float_t*)((void*)this))[i];
+		return ((float*)((void*)this))[i];
 	}
 	float3::operator float2() const
 	{
@@ -352,9 +352,9 @@ namespace mth
 	{
 		return float4(x, y, z, 1.0f);
 	}
-	float3::operator float_t*() const
+	float3::operator float*() const
 	{
-		return (float_t*)((void*)this);
+		return (float*)((void*)this);
 	}
 
 
@@ -362,12 +362,12 @@ namespace mth
 	{
 		memset(this, 0, sizeof(float4));
 	}
-	float4::float4(const float_t f) : x(f), y(f), z(f), w(f) {}
-	float4::float4(const float_t * const v)
+	float4::float4(const float f) : x(f), y(f), z(f), w(f) {}
+	float4::float4(const float * const v)
 	{
 		memcpy(this, v, sizeof(float4));
 	}
-	float4::float4(const float_t x, const float_t y, const float_t z, const float_t w) : x(x), y(y), z(z), w(w) {}
+	float4::float4(const float x, const float y, const float z, const float w) : x(x), y(y), z(z), w(w) {}
 	float4::float4(const float4& v)
 	{
 		memcpy(this, &v, sizeof(float4));
@@ -380,15 +380,15 @@ namespace mth
 	{
 		return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
 	}
-	float_t float4::Dot(const float4 v) const
+	float float4::Dot(const float4 v) const
 	{
 		return x * v.x + y * v.y + z * v.z + w * v.w;
 	}
-	float_t float4::LengthSquare() const
+	float float4::LengthSquare() const
 	{
 		return x * x + y * y + z * z + w * w;
 	}
-	float_t float4::Length() const
+	float float4::Length() const
 	{
 		return sqrtf(LengthSquare());
 	}
@@ -423,19 +423,19 @@ namespace mth
 	{
 		return float4(x / v.x, y / v.y, z / v.z, w / v.w);
 	}
-	float4 float4::operator+(const float_t f) const
+	float4 float4::operator+(const float f) const
 	{
 		return float4(x + f, y + f, z + f, w + f);
 	}
-	float4 float4::operator-(const float_t f) const
+	float4 float4::operator-(const float f) const
 	{
 		return float4(x - f, y - f, z - f, w - f);
 	}
-	float4 float4::operator*(const float_t f) const
+	float4 float4::operator*(const float f) const
 	{
 		return float4(x * f, y * f, z * f, w * f);
 	}
-	float4 float4::operator/(const float_t f) const
+	float4 float4::operator/(const float f) const
 	{
 		return float4(x / f, y / f, z / f, w / f);
 	}
@@ -480,7 +480,7 @@ namespace mth
 		memcpy(this, &v, sizeof(float4));
 		return *this;
 	}
-	float4& float4::operator+=(const float_t f)
+	float4& float4::operator+=(const float f)
 	{
 		x += f;
 		y += f;
@@ -488,7 +488,7 @@ namespace mth
 		w += f;
 		return *this;
 	}
-	float4& float4::operator-=(const float_t f)
+	float4& float4::operator-=(const float f)
 	{
 		x -= f;
 		y -= f;
@@ -496,7 +496,7 @@ namespace mth
 		w -= f;
 		return *this;
 	}
-	float4& float4::operator*=(const float_t f)
+	float4& float4::operator*=(const float f)
 	{
 		x *= f;
 		y *= f;
@@ -504,7 +504,7 @@ namespace mth
 		w *= f;
 		return *this;
 	}
-	float4& float4::operator/=(const float_t f)
+	float4& float4::operator/=(const float f)
 	{
 		x /= f;
 		y /= f;
@@ -512,7 +512,7 @@ namespace mth
 		w /= f;
 		return *this;
 	}
-	float4& float4::operator=(const float_t f)
+	float4& float4::operator=(const float f)
 	{
 		x = f;
 		y = f;
@@ -528,13 +528,13 @@ namespace mth
 			x * m(0, 2) + y * m(1, 2) + z * m(2, 2) + w * m(3, 2),
 			x * m(0, 3) + y * m(1, 3) + z * m(2, 3) + w * m(3, 3));
 	}
-	float_t float4::operator()(const int i) const
+	float float4::operator()(const int i) const
 	{
-		return ((float_t*)((void*)this))[i];
+		return ((float*)((void*)this))[i];
 	}
-	float_t& float4::operator()(const int i)
+	float& float4::operator()(const int i)
 	{
-		return ((float_t*)((void*)this))[i];
+		return ((float*)((void*)this))[i];
 	}
 	float4::operator float2() const
 	{
@@ -544,9 +544,9 @@ namespace mth
 	{
 		return float3(x, y, z);
 	}
-	float4::operator float_t*() const
+	float4::operator float*() const
 	{
-		return (float_t*)((void*)this);
+		return (float*)((void*)this);
 	}
 
 
@@ -554,16 +554,16 @@ namespace mth
 	{
 		memset(this, 0, sizeof(float2x2));
 	}
-	float2x2::float2x2(const float_t f)
+	float2x2::float2x2(const float f)
 	{
 		mat[0][0] = f; mat[0][1] = f;
 		mat[1][0] = f; mat[1][1] = f;
 	}
-	float2x2::float2x2(const float_t * const m)
+	float2x2::float2x2(const float * const m)
 	{
 		memcpy(mat, m, sizeof(float2x2));
 	}
-	float2x2::float2x2(const float_t _00, const float_t _01, const float_t _10, const float_t _11)
+	float2x2::float2x2(const float _00, const float _01, const float _10, const float _11)
 	{
 		mat[0][0] = _00; mat[0][1] = _01;
 		mat[1][0] = _10; mat[1][1] = _11;
@@ -580,12 +580,12 @@ namespace mth
 	{
 		return float2x2(1.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float2x2 float2x2::Rotation(const float_t a)
+	float2x2 float2x2::Rotation(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float2x2(ca, -sa, sa, ca);
 	}
-	float2x2 float2x2::Scaling(const float_t x, const float_t y)
+	float2x2 float2x2::Scaling(const float x, const float y)
 	{
 		return float2x2(x, 0.0f, 0.0f, y);
 	}
@@ -593,21 +593,21 @@ namespace mth
 	{
 		return float2x2(s.x, 0.0f, 0.0f, s.y);
 	}
-	float2x2 float2x2::RotationScaling(const float_t a, const float_t x, const float_t y)
+	float2x2 float2x2::RotationScaling(const float a, const float x, const float y)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float2x2(ca*x, -sa * x, sa*y, ca*y);
 	}
-	float2x2 float2x2::RotationScaling(const float_t a, const float2 s)
+	float2x2 float2x2::RotationScaling(const float a, const float2 s)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float2x2(ca*s.x, -sa * s.x, sa*s.y, ca*s.y);
 	}
-	float_t float2x2::operator()(const int row, const int column) const
+	float float2x2::operator()(const int row, const int column) const
 	{
 		return mat[row][column];
 	}
-	float_t& float2x2::operator()(const int row, const int column)
+	float& float2x2::operator()(const int row, const int column)
 	{
 		return mat[row][column];
 	}
@@ -630,7 +630,7 @@ namespace mth
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float_t float2x2::Determinant() const
+	float float2x2::Determinant() const
 	{
 		return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
 	}
@@ -640,14 +640,14 @@ namespace mth
 	}
 	float2x2 float2x2::Inverse() const
 	{
-		float_t det = Determinant();
+		float det = Determinant();
 		return float2x2(
 			mat[1][1] / det, mat[0][1] / -det,
 			mat[1][0] / -det, mat[0][0] / det);
 	}
 	void float2x2::Transpose()
 	{
-		float_t tmp = mat[0][1]; mat[0][1] = mat[1][0]; mat[1][0] = tmp;
+		float tmp = mat[0][1]; mat[0][1] = mat[1][0]; mat[1][0] = tmp;
 	}
 	float2x2 float2x2::Trasposed() const
 	{
@@ -689,39 +689,39 @@ namespace mth
 	{
 		memcpy(this, &m, sizeof(float2x2));		return *this;
 	}
-	float2x2 float2x2::operator+(const float_t f) const
+	float2x2 float2x2::operator+(const float f) const
 	{
 		return float2x2(mat[0][0] + f, mat[0][1] + f, mat[1][0] + f, mat[1][1] + f);
 	}
-	float2x2& float2x2::operator+=(const float_t f)
+	float2x2& float2x2::operator+=(const float f)
 	{
 		return *this = *this + f;
 	}
-	float2x2 float2x2::operator-(const float_t f) const
+	float2x2 float2x2::operator-(const float f) const
 	{
 		return float2x2(mat[0][0] - f, mat[0][1] - f, mat[1][0] - f, mat[1][1] - f);
 	}
-	float2x2& float2x2::operator-=(const float_t f)
+	float2x2& float2x2::operator-=(const float f)
 	{
 		return *this = *this - f;
 	}
-	float2x2 float2x2::operator*(const float_t f) const
+	float2x2 float2x2::operator*(const float f) const
 	{
 		return float2x2(mat[0][0] * f, mat[0][1] * f, mat[1][0] * f, mat[1][1] * f);
 	}
-	float2x2& float2x2::operator*=(const float_t f)
+	float2x2& float2x2::operator*=(const float f)
 	{
 		return *this = *this*f;
 	}
-	float2x2 float2x2::operator/(const float_t f) const
+	float2x2 float2x2::operator/(const float f) const
 	{
 		return float2x2(mat[0][0] / f, mat[0][1] / f, mat[1][0] / f, mat[1][1] / f);
 	}
-	float2x2& float2x2::operator/=(const float_t f)
+	float2x2& float2x2::operator/=(const float f)
 	{
 		return *this = *this / f;
 	}
-	float2x2& float2x2::operator=(const float_t f)
+	float2x2& float2x2::operator=(const float f)
 	{
 		return *this = float2x2(f);
 	}
@@ -735,20 +735,20 @@ namespace mth
 	{
 		memset(this, 0, sizeof(float3x3));
 	}
-	float3x3::float3x3(const float_t f)
+	float3x3::float3x3(const float f)
 	{
 		mat[0][0] = f; mat[0][1] = f; mat[0][2] = f;
 		mat[1][0] = f; mat[1][1] = f; mat[1][2] = f;
 		mat[2][0] = f; mat[2][1] = f; mat[2][2] = f;
 	}
-	float3x3::float3x3(const float_t * const m)
+	float3x3::float3x3(const float * const m)
 	{
 		memcpy(this, m, sizeof(float3x3));
 	}
 	float3x3::float3x3(
-		const float_t _00, const float_t _01, const float_t _02,
-		const float_t _10, const float_t _11, const float_t _12,
-		const float_t _20, const float_t _21, const float_t _22)
+		const float _00, const float _01, const float _02,
+		const float _10, const float _11, const float _12,
+		const float _20, const float _21, const float _22)
 	{
 		mat[0][0] = _00; mat[0][1] = _01; mat[0][2] = _02;
 		mat[1][0] = _10; mat[1][1] = _11; mat[1][2] = _12;
@@ -769,7 +769,7 @@ namespace mth
 			0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 1.0f);
 	}
-	float3x3 float3x3::Scaling2D(const float_t x, const float_t y)
+	float3x3 float3x3::Scaling2D(const float x, const float y)
 	{
 		return float3x3(
 			x, 0.0f, 0.0f,
@@ -783,7 +783,7 @@ namespace mth
 			0.0f, s.y, 0.0f,
 			0.0f, 0.0f, 1.0f);
 	}
-	float3x3 float3x3::Translation2D(const float_t x, const float_t y)
+	float3x3 float3x3::Translation2D(const float x, const float y)
 	{
 		return float3x3(
 			1.0f, 0.0f, x,
@@ -797,15 +797,15 @@ namespace mth
 			0.0f, 1.0f, t.y,
 			0.0f, 0.0f, 1.0f);
 	}
-	float3x3 float3x3::Rotation2D(const float_t a)
+	float3x3 float3x3::Rotation2D(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float3x3(
 			ca, -sa, 0.0f,
 			sa, ca, 0.0f,
 			0.0f, 0.0f, 1.0f);
 	}
-	float3x3 float3x3::Scaling(const float_t x, const float_t y, const float_t z)
+	float3x3 float3x3::Scaling(const float x, const float y, const float z)
 	{
 		return float3x3(
 			x, 0.0f, 0.0f,
@@ -819,33 +819,33 @@ namespace mth
 			0.0f, s.y, 0.0f,
 			0.0f, 0.0f, s.z);
 	}
-	float3x3 float3x3::RotationX(const float_t a)
+	float3x3 float3x3::RotationX(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float3x3(
 			1.0f, 0.0f, 0.0f,
 			0.0f, ca, -sa,
 			0.0f, sa, ca);
 	}
-	float3x3 float3x3::RotationY(const float_t a)
+	float3x3 float3x3::RotationY(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float3x3(
 			ca, 0.0f, sa,
 			0.0f, 1.0f, 0.0f,
 			-sa, 0.0f, ca);
 	}
-	float3x3 float3x3::RotationZ(const float_t a)
+	float3x3 float3x3::RotationZ(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float3x3(
 			ca, -sa, 0.0f,
 			sa, ca, 0.0f,
 			0.0f, 0.0f, 1.0f);
 	}
-	float3x3 float3x3::Rotation(const float_t pitch, const float_t yaw, const float_t roll)
+	float3x3 float3x3::Rotation(const float pitch, const float yaw, const float roll)
 	{
-		float_t cp = cosf(pitch), sp = sinf(pitch), cy = cosf(yaw), sy = sinf(yaw), cr = cosf(roll), sr = sinf(roll);
+		float cp = cosf(pitch), sp = sinf(pitch), cy = cosf(yaw), sy = sinf(yaw), cr = cosf(roll), sr = sinf(roll);
 		return float3x3(
 			sy*sp*sr + cy * cr, sy*sp*cr - cy * sr, sy*cp,
 			cp*sr, cp*cr, -sp,
@@ -853,29 +853,29 @@ namespace mth
 	}
 	float3x3 float3x3::Rotation(const float3 r)
 	{
-		float_t cp = cosf(r.x), sp = sinf(r.x), cy = cosf(r.y), sy = sinf(r.y), cr = cosf(r.z), sr = sinf(r.z);
+		float cp = cosf(r.x), sp = sinf(r.x), cy = cosf(r.y), sy = sinf(r.y), cr = cosf(r.z), sr = sinf(r.z);
 		return float3x3(
 			sy*sp*sr + cy * cr, sy*sp*cr - cy * sr, sy*cp,
 			cp*sr, cp*cr, -sp,
 			cy*sp*sr - sy * cr, cy*sp*cr + sy * sr, cy*cp);
 	}
-	float3x3 float3x3::RotationAxis(const float3 axis, const float_t a)
+	float3x3 float3x3::RotationAxis(const float3 axis, const float a)
 	{
 		return RotationNormal(axis.Normalized(), a);
 	}
-	float3x3 float3x3::RotationNormal(const float3 n, const float_t a)
+	float3x3 float3x3::RotationNormal(const float3 n, const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float3x3(
 			ca + n.x*n.x*(1 - ca), n.x*n.y*(1 - ca) - n.z*sa, n.x*n.z*(1 - ca) + n.y*sa,
 			n.y*n.x*(1 - ca) + n.z*sa, ca + n.y*n.y*(1 - ca), n.y*n.z*(1 - ca) - n.x*sa,
 			n.z*n.x*(1 - ca) - n.y*sa, n.z*n.y*(1 - ca) + n.x*sa, ca + n.z*n.z*(1 - ca));
 	}
-	float_t float3x3::operator()(const int row, const int column) const
+	float float3x3::operator()(const int row, const int column) const
 	{
 		return mat[row][column];
 	}
-	float_t& float3x3::operator()(const int row, const int column)
+	float& float3x3::operator()(const int row, const int column)
 	{
 		return mat[row][column];
 	}
@@ -900,7 +900,7 @@ namespace mth
 			mat[2][0], mat[2][1], mat[2][2], 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float_t float3x3::Determinant() const
+	float float3x3::Determinant() const
 	{
 		return
 			mat[0][0] * mat[1][1] * mat[2][2] +
@@ -916,7 +916,7 @@ namespace mth
 	}
 	float3x3 float3x3::Inverse() const
 	{
-		float_t det = Determinant();
+		float det = Determinant();
 		return float3x3(
 			float2x2(mat[1][1], mat[1][2], mat[2][1], mat[2][2]).Determinant() / det,
 			float2x2(mat[0][1], mat[0][2], mat[2][1], mat[2][2]).Determinant() / -det,
@@ -932,7 +932,7 @@ namespace mth
 	}
 	void float3x3::Transpose()
 	{
-		float_t tmp;
+		float tmp;
 		tmp = mat[0][1]; mat[0][1] = mat[1][0]; mat[1][0] = tmp;
 		tmp = mat[0][2]; mat[0][2] = mat[2][0]; mat[2][0] = tmp;
 		tmp = mat[1][2]; mat[1][2] = mat[2][1]; mat[2][1] = tmp;
@@ -986,51 +986,51 @@ namespace mth
 	{
 		memcpy(this, &m, sizeof(float3x3));		return *this;
 	}
-	float3x3 float3x3::operator+(const float_t f) const
+	float3x3 float3x3::operator+(const float f) const
 	{
 		return float3x3(
 			mat[0][0] + f, mat[0][1] + f, mat[0][2] + f,
 			mat[1][0] + f, mat[1][1] + f, mat[1][2] + f,
 			mat[2][0] + f, mat[2][1] + f, mat[2][2] + f);
 	}
-	float3x3& float3x3::operator+=(const float_t f)
+	float3x3& float3x3::operator+=(const float f)
 	{
 		return *this = *this + f;
 	}
-	float3x3 float3x3::operator-(const float_t f) const
+	float3x3 float3x3::operator-(const float f) const
 	{
 		return float3x3(
 			mat[0][0] - f, mat[0][1] - f, mat[0][2] - f,
 			mat[1][0] - f, mat[1][1] - f, mat[1][2] - f,
 			mat[2][0] - f, mat[2][1] - f, mat[2][2] - f);
 	}
-	float3x3& float3x3::operator-=(const float_t f)
+	float3x3& float3x3::operator-=(const float f)
 	{
 		return *this = *this - f;
 	}
-	float3x3 float3x3::operator*(const float_t f) const
+	float3x3 float3x3::operator*(const float f) const
 	{
 		return float3x3(
 			mat[0][0] * f, mat[0][1] * f, mat[0][2] * f,
 			mat[1][0] * f, mat[1][1] * f, mat[1][2] * f,
 			mat[2][0] * f, mat[2][1] * f, mat[2][2] * f);
 	}
-	float3x3& float3x3::operator*=(const float_t f)
+	float3x3& float3x3::operator*=(const float f)
 	{
 		return *this = *this*f;
 	}
-	float3x3 float3x3::operator/(const float_t f) const
+	float3x3 float3x3::operator/(const float f) const
 	{
 		return float3x3(
 			mat[0][0] / f, mat[0][1] / f, mat[0][2] / f,
 			mat[1][0] / f, mat[1][1] / f, mat[1][2] / f,
 			mat[2][0] / f, mat[2][1] / f, mat[2][2] / f);
 	}
-	float3x3& float3x3::operator/=(const float_t f)
+	float3x3& float3x3::operator/=(const float f)
 	{
 		return *this = *this / f;
 	}
-	float3x3& float3x3::operator=(const float_t f)
+	float3x3& float3x3::operator=(const float f)
 	{
 		return *this = float3x3(f);
 	}
@@ -1047,22 +1047,22 @@ namespace mth
 	{
 		memset(this, 0, sizeof(float4x4));
 	}
-	float4x4::float4x4(const float_t f)
+	float4x4::float4x4(const float f)
 	{
 		mat[0][0] = f; mat[0][1] = f; mat[0][2] = f; mat[0][3] = f;
 		mat[1][0] = f; mat[1][1] = f; mat[1][2] = f; mat[1][3] = f;
 		mat[2][0] = f; mat[2][1] = f; mat[2][2] = f; mat[2][3] = f;
 		mat[3][0] = f; mat[3][1] = f; mat[3][2] = f; mat[3][3] = f;
 	}
-	float4x4::float4x4(const float_t * const m)
+	float4x4::float4x4(const float * const m)
 	{
 		memcpy(this, m, sizeof(float4x4));
 	}
 	float4x4::float4x4(
-		const float_t _00, const float_t _01, const float_t _02, const float_t _03,
-		const float_t _10, const float_t _11, const float_t _12, const float_t _13,
-		const float_t _20, const float_t _21, const float_t _22, const float_t _23,
-		const float_t _30, const float_t _31, const float_t _32, const float_t _33)
+		const float _00, const float _01, const float _02, const float _03,
+		const float _10, const float _11, const float _12, const float _13,
+		const float _20, const float _21, const float _22, const float _23,
+		const float _30, const float _31, const float _32, const float _33)
 	{
 		mat[0][0] = _00; mat[0][1] = _01; mat[0][2] = _02; mat[0][3] = _03;
 		mat[1][0] = _10; mat[1][1] = _11; mat[1][2] = _12; mat[1][3] = _13;
@@ -1085,7 +1085,7 @@ namespace mth
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::Scaling(const float_t x, const float_t y, const float_t z)
+	float4x4 float4x4::Scaling(const float x, const float y, const float z)
 	{
 		return float4x4(
 			x, 0.0f, 0.0f, 0.0f,
@@ -1101,7 +1101,7 @@ namespace mth
 			0.0f, 0.0f, s.z, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::Translation(const float_t x, const float_t y, const float_t z)
+	float4x4 float4x4::Translation(const float x, const float y, const float z)
 	{
 		return float4x4(
 			1.0f, 0.0f, 0.0f, x,
@@ -1117,36 +1117,36 @@ namespace mth
 			0.0f, 0.0f, 1.0f, t.z,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::RotationX(const float_t a)
+	float4x4 float4x4::RotationX(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float4x4(
 			1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, ca, -sa, 0.0f,
 			0.0f, sa, ca, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::RotationY(const float_t a)
+	float4x4 float4x4::RotationY(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float4x4(
 			ca, 0.0f, sa, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
 			-sa, 0.0f, ca, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::RotationZ(const float_t a)
+	float4x4 float4x4::RotationZ(const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float4x4(
 			ca, -sa, 0.0f, 0.0f,
 			sa, ca, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::Rotation(const float_t pitch, const float_t yaw, const float_t roll)
+	float4x4 float4x4::Rotation(const float pitch, const float yaw, const float roll)
 	{
-		float_t cp = cosf(pitch), sp = sinf(pitch), cy = cosf(yaw), sy = sinf(yaw), cr = cosf(roll), sr = sinf(roll);
+		float cp = cosf(pitch), sp = sinf(pitch), cy = cosf(yaw), sy = sinf(yaw), cr = cosf(roll), sr = sinf(roll);
 		return float4x4(
 			sy*sp*sr + cy * cr, sy*sp*cr - cy * sr, sy*cp, 0.0f,
 			cp*sr, cp*cr, -sp, 0.0f,
@@ -1155,29 +1155,29 @@ namespace mth
 	}
 	float4x4 float4x4::Rotation(const float3 r)
 	{
-		float_t cp = cosf(r.x), sp = sinf(r.x), cy = cosf(r.y), sy = sinf(r.y), cr = cosf(r.z), sr = sinf(r.z);
+		float cp = cosf(r.x), sp = sinf(r.x), cy = cosf(r.y), sy = sinf(r.y), cr = cosf(r.z), sr = sinf(r.z);
 		return float4x4(
 			sy*sp*sr + cy * cr, sy*sp*cr - cy * sr, sy*cp, 0.0f,
 			cp*sr, cp*cr, -sp, 0.0f,
 			cy*sp*sr - sy * cr, cy*sp*cr + sy * sr, cy*cp, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::RotationAxis(const float3 axis, const float_t a)
+	float4x4 float4x4::RotationAxis(const float3 axis, const float a)
 	{
 		return RotationNormal(axis.Normalized(), a);
 	}
-	float4x4 float4x4::RotationNormal(const float3 n, const float_t a)
+	float4x4 float4x4::RotationNormal(const float3 n, const float a)
 	{
-		float_t ca = cosf(a), sa = sinf(a);
+		float ca = cosf(a), sa = sinf(a);
 		return float4x4(
 			ca + n.x*n.x*(1 - ca), n.x*n.y*(1 - ca) - n.z*sa, n.x*n.z*(1 - ca) + n.y*sa, 0.0f,
 			n.y*n.x*(1 - ca) + n.z*sa, ca + n.y*n.y*(1 - ca), n.y*n.z*(1 - ca) - n.x*sa, 0.0f,
 			n.z*n.x*(1 - ca) - n.y*sa, n.z*n.y*(1 - ca) + n.x*sa, ca + n.z*n.z*(1 - ca), 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::ScalingRotationTranslation(const float_t sx, const float_t sy, const float_t sz, const float_t pitch, const float_t yaw, const float_t roll, const float_t tx, const float_t ty, const float_t tz)
+	float4x4 float4x4::ScalingRotationTranslation(const float sx, const float sy, const float sz, const float pitch, const float yaw, const float roll, const float tx, const float ty, const float tz)
 	{
-		float_t cpitch = cosf(pitch), spitch = sinf(pitch), cyaw = cosf(yaw), syaw = sinf(yaw), croll = cosf(roll), sroll = sinf(roll);
+		float cpitch = cosf(pitch), spitch = sinf(pitch), cyaw = cosf(yaw), syaw = sinf(yaw), croll = cosf(roll), sroll = sinf(roll);
 		return float4x4(
 			(syaw*spitch*sroll + cyaw * croll)*sx, (syaw*spitch*croll - cyaw * sroll)*sy, (syaw*cpitch)*sz, tx,
 			(cpitch*sroll)*sx, (cpitch*croll)*sy, (-spitch)*sz, ty,
@@ -1186,24 +1186,24 @@ namespace mth
 	}
 	float4x4 float4x4::ScalingRotationTranslation(const float3 s, const float3 r, const float3 t)
 	{
-		float_t cpitch = cosf(r.x), spitch = sinf(r.x), cyaw = cosf(r.y), syaw = sinf(r.y), croll = cosf(r.z), sroll = sinf(r.z);
+		float cpitch = cosf(r.x), spitch = sinf(r.x), cyaw = cosf(r.y), syaw = sinf(r.y), croll = cosf(r.z), sroll = sinf(r.z);
 		return float4x4(
 			(syaw*spitch*sroll + cyaw * croll)*s.x, (syaw*spitch*croll - cyaw * sroll)*s.y, (syaw*cpitch)*s.z, t.x,
 			(cpitch*sroll)*s.x, (cpitch*croll)*s.y, (-spitch)*s.z, t.y,
 			(cyaw*spitch*sroll - syaw * croll)*s.x, (cyaw*spitch*croll + syaw * sroll)*s.y, (cyaw*cpitch)*s.z, t.z,
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	float4x4 float4x4::PerspectiveFOV(const float_t fov, const float_t screenAspect, const float_t screenNear, const float_t screenDepth)
+	float4x4 float4x4::PerspectiveFOV(const float fov, const float screenAspect, const float screenNear, const float screenDepth)
 	{
-		float_t yScale = 1.0f / tanf(fov / 2.0f);
-		float_t xScale = yScale / screenAspect;
+		float yScale = 1.0f / tanf(fov / 2.0f);
+		float xScale = yScale / screenAspect;
 		return float4x4(
 			xScale, 0.0f, 0.0f, 0.0f,
 			0.0f, yScale, 0.0f, 0.0f,
 			0.0f, 0.0f, screenDepth / (screenDepth - screenNear), -screenDepth * screenNear / (screenDepth - screenNear),
 			0.0f, 0.0f, 1.0f, 0.0f);
 	}
-	float4x4 float4x4::Orthographic(const float_t viewWidth, const float_t viewHeight, const float_t screenNear, const float_t screenDepth)
+	float4x4 float4x4::Orthographic(const float viewWidth, const float viewHeight, const float screenNear, const float screenDepth)
 	{
 		return float4x4(
 			2.0f / viewWidth, 0.0f, 0.0f, 0.0f,
@@ -1226,11 +1226,11 @@ namespace mth
 	{
 		return LookTo(eye, focus - eye, up);
 	}
-	float_t float4x4::operator()(const int row, const int column) const
+	float float4x4::operator()(const int row, const int column) const
 	{
 		return mat[row][column];
 	}
-	float_t& float4x4::operator()(const int row, const int column)
+	float& float4x4::operator()(const int row, const int column)
 	{
 		return mat[row][column];
 	}
@@ -1255,7 +1255,7 @@ namespace mth
 			mat[1][0], mat[1][1], mat[1][2],
 			mat[2][0], mat[2][1], mat[2][2]);
 	}
-	float_t float4x4::Determinant() const
+	float float4x4::Determinant() const
 	{
 		return
 			float3x3(mat[1][1], mat[1][2], mat[1][3], mat[2][1], mat[2][2], mat[2][3], mat[3][1], mat[3][2], mat[3][3]).Determinant() * mat[0][0] -
@@ -1269,7 +1269,7 @@ namespace mth
 	}
 	float4x4 float4x4::Inverse() const
 	{
-		float_t det = Determinant();
+		float det = Determinant();
 		return float4x4(
 			float3x3(mat[1][1], mat[1][2], mat[1][3], mat[2][1], mat[2][2], mat[2][3], mat[3][1], mat[3][2], mat[3][3]).Determinant() / det,
 			float3x3(mat[0][1], mat[0][2], mat[0][3], mat[2][1], mat[2][2], mat[2][3], mat[3][1], mat[3][2], mat[3][3]).Determinant() / -det,
@@ -1293,7 +1293,7 @@ namespace mth
 	}
 	void float4x4::Transpose()
 	{
-		float_t tmp;
+		float tmp;
 		tmp = mat[0][1]; mat[0][1] = mat[1][0]; mat[1][0] = tmp;
 		tmp = mat[0][2]; mat[0][2] = mat[2][0]; mat[2][0] = tmp;
 		tmp = mat[0][3]; mat[0][3] = mat[3][0]; mat[3][0] = tmp;
@@ -1359,7 +1359,7 @@ namespace mth
 	{
 		memcpy(this, &m, sizeof(float4x4));		return *this;
 	}
-	float4x4 float4x4::operator+(const float_t f) const
+	float4x4 float4x4::operator+(const float f) const
 	{
 		return float4x4(
 			mat[0][0] + f, mat[0][1] + f, mat[0][2] + f, mat[0][3] + f,
@@ -1367,11 +1367,11 @@ namespace mth
 			mat[2][0] + f, mat[2][1] + f, mat[2][2] + f, mat[2][3] + f,
 			mat[3][0] + f, mat[3][1] + f, mat[3][2] + f, mat[3][3] + f);
 	}
-	float4x4& float4x4::operator+=(const float_t f)
+	float4x4& float4x4::operator+=(const float f)
 	{
 		return*this = *this + f;
 	}
-	float4x4 float4x4::operator-(const float_t f) const
+	float4x4 float4x4::operator-(const float f) const
 	{
 		return float4x4(
 			mat[0][0] - f, mat[0][1] - f, mat[0][2] - f, mat[0][3] - f,
@@ -1379,11 +1379,11 @@ namespace mth
 			mat[2][0] - f, mat[2][1] - f, mat[2][2] - f, mat[2][3] - f,
 			mat[3][0] - f, mat[3][1] - f, mat[3][2] - f, mat[3][3] - f);
 	}
-	float4x4& float4x4::operator-=(const float_t f)
+	float4x4& float4x4::operator-=(const float f)
 	{
 		return *this = *this - f;
 	}
-	float4x4 float4x4::operator*(const float_t f) const
+	float4x4 float4x4::operator*(const float f) const
 	{
 		return float4x4(
 			mat[0][0] * f, mat[0][1] * f, mat[0][2] * f, mat[0][3] * f,
@@ -1391,11 +1391,11 @@ namespace mth
 			mat[2][0] * f, mat[2][1] * f, mat[2][2] * f, mat[2][3] * f,
 			mat[3][0] * f, mat[3][1] * f, mat[3][2] * f, mat[3][3] * f);
 	}
-	float4x4& float4x4::operator*=(const float_t f)
+	float4x4& float4x4::operator*=(const float f)
 	{
 		return *this = *this*f;
 	}
-	float4x4 float4x4::operator/(const float_t f) const
+	float4x4 float4x4::operator/(const float f) const
 	{
 		return float4x4(
 			mat[0][0] / f, mat[0][1] / f, mat[0][2] / f, mat[0][3] / f,
@@ -1403,11 +1403,11 @@ namespace mth
 			mat[2][0] / f, mat[2][1] / f, mat[2][2] / f, mat[2][3] / f,
 			mat[3][0] / f, mat[3][1] / f, mat[3][2] / f, mat[3][3] / f);
 	}
-	float4x4& float4x4::operator/=(const float_t f)
+	float4x4& float4x4::operator/=(const float f)
 	{
 		return *this = *this / f;
 	}
-	float4x4& float4x4::operator=(const float_t f)
+	float4x4& float4x4::operator=(const float f)
 	{
 		return *this = float4x4(f);
 	}
@@ -1421,77 +1421,77 @@ namespace mth
 	}
 
 
-	float2 operator+(float_t f, float2 v)
+	float2 operator+(float f, float2 v)
 	{
 		return v + f;
 	}
-	float3 operator+(float_t f, float3 v)
+	float3 operator+(float f, float3 v)
 	{
 		return v + f;
 	}
-	float4 operator+(float_t f, float4 v)
+	float4 operator+(float f, float4 v)
 	{
 		return v + f;
 	}
-	float2x2 operator+(float_t f, float2x2 m)
+	float2x2 operator+(float f, float2x2 m)
 	{
 		return m + f;
 	}
-	float3x3 operator+(float_t f, float3x3 m)
+	float3x3 operator+(float f, float3x3 m)
 	{
 		return m + f;
 	}
-	float4x4 operator+(float_t f, float4x4 m)
+	float4x4 operator+(float f, float4x4 m)
 	{
 		return m + f;
 	}
 
-	float2 operator-(float_t f, float2 v)
+	float2 operator-(float f, float2 v)
 	{
 		return float2(f) - v;
 	}
-	float3 operator-(float_t f, float3 v)
+	float3 operator-(float f, float3 v)
 	{
 		return float3(f) - v;
 	}
-	float4 operator-(float_t f, float4 v)
+	float4 operator-(float f, float4 v)
 	{
 		return float4(f) - v;
 	}
-	float2x2 operator-(float_t f, float2x2 m)
+	float2x2 operator-(float f, float2x2 m)
 	{
 		return float2x2(f) - m;
 	}
-	float3x3 operator-(float_t f, float3x3 m)
+	float3x3 operator-(float f, float3x3 m)
 	{
 		return float3x3(f) - m;
 	}
-	float4x4 operator-(float_t f, float4x4 m)
+	float4x4 operator-(float f, float4x4 m)
 	{
 		return float4x4(f) - m;
 	}
 
-	float2 operator*(float_t f, float2 v)
+	float2 operator*(float f, float2 v)
 	{
 		return v * f;
 	}
-	float3 operator*(float_t f, float3 v)
+	float3 operator*(float f, float3 v)
 	{
 		return v * f;
 	}
-	float4 operator*(float_t f, float4 v)
+	float4 operator*(float f, float4 v)
 	{
 		return v * f;
 	}
-	float2x2 operator*(float_t f, float2x2 m)
+	float2x2 operator*(float f, float2x2 m)
 	{
 		return m * f;
 	}
-	float3x3 operator*(float_t f, float3x3 m)
+	float3x3 operator*(float f, float3x3 m)
 	{
 		return m * f;
 	}
-	float4x4 operator*(float_t f, float4x4 m)
+	float4x4 operator*(float f, float4x4 m)
 	{
 		return m * f;
 	}

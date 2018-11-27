@@ -1,6 +1,4 @@
 #pragma once
-#ifndef QUAD_QUADRUPED_H_
-#define QUAD_QUADRUPED_H_
 
 #include <quad/leg.h>
 #include <array>
@@ -23,6 +21,4 @@ public:
 	void DisableLegs();
 };
 
-} /* namespace quad */
-
-#endif /* QUAD_QUADRUPED_H_ */
+}

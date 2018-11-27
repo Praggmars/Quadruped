@@ -4,10 +4,11 @@
 
 namespace quad
 {
-uint32_t DegToCompareValue(float_t deg, TIM_TypeDef* tim)
+uint32_t DegToCompareValue(float deg, TIM_TypeDef* tim)
 {
 	uint32_t arr = LL_TIM_GetAutoReload(tim);
-	return ((3.0f + 4.0f*deg / mth::pi) * arr) / 20;
+	//return ((3.0f + 4.0f*deg / mth::pi) * arr) / 20;
+	return (1.5f + (deg / (mth::pi / 2.0f))) / 20.0f * arr;
 }
 
 
@@ -35,7 +36,7 @@ Servo::Servo(ServoInitStruct sis)
 	setState(0.0f);
 }
 
-void Servo::setState(float_t r)
+void Servo::setState(float r)
 {
 	m_state = r + m_assemblyOffset;
 	if (m_state < -mth::pi)
@@ -44,11 +45,11 @@ void Servo::setState(float_t r)
 		m_state = mth::pi;
 	setServoState[m_channel](m_timer, m_state);
 }
-float_t Servo::getState()
+float Servo::getState()
 {
 	return m_state;
 }
-void Servo::Move(float_t delta)
+void Servo::Move(float delta)
 {
 	setState(m_state + delta);
 }

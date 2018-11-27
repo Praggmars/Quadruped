@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef PERIF_SERVO_H_
-#define PERIF_SERVO_H_
-
 #include "cmain.h"
 #include <functional>
 
@@ -28,21 +25,15 @@ class Servo
 	TIM_TypeDef *m_timer;
 	TimerChannel m_channel;
 	float m_assemblyOffset;
-	float_t m_state;
+	float m_state;
 
 public:
 	Servo(ServoInitStruct sis);
 
-	void setState(float_t r);
-	float_t getState();
-	void Move(float_t delta);
+	void setState(float r);
+	float getState();
+	void Move(float delta);
 	void Enable();
 	void Disable();
 };
-
-
 }
-
-
-
-#endif /* PERIF_SERVO_H_ */

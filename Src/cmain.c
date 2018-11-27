@@ -92,6 +92,8 @@ void ADC_PostInit()
 	while (!LL_ADC_IsActiveFlag_ADRDY(ADC1));
 }
 
+void USART3_IRQCallback(){}
+void UART4_IRQCallback(){}
 /* USER CODE END 0 */
 
 /**
@@ -202,7 +204,13 @@ void SystemClock_Config(void)
   uint32_t clockSrc = LL_RCC_PLLSOURCE_HSI;
 #endif
 
-  LL_RCC_PLL_ConfigDomain_SYS(clockSrc, LL_RCC_PLLM_DIV_1, 20, LL_RCC_PLLR_DIV_2);
+  LL_RCC_PLL_ConfigDomain_SYS(clockSrc, LL_RCC_PLLM_DIV_1,
+#if EXTERNAL_CLOCK == 1
+		  20
+#else
+		  10
+#endif
+		  , LL_RCC_PLLR_DIV_2);
 
   LL_RCC_PLL_EnableDomain_SYS();
 

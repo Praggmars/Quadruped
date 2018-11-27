@@ -1,6 +1,4 @@
 #pragma once
-#ifndef FIFO_H_
-#define FIFO_H_
 
 #include "cmain.h"
 
@@ -57,6 +55,4 @@ public:
 	}
 };
 
-} /* namespace util */
-
-#endif /* FIFO_H_ */
+}

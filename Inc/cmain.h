@@ -58,7 +58,6 @@
 #include "stm32l4xx_ll_gpio.h"
 
 /* USER CODE BEGIN Includes */
-typedef float float_t;
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/

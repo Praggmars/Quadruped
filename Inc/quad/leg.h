@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef QUAD_LEG_H_
-#define QUAD_LEG_H_
-
 #include "perif/servo.h"
 #include "util/linalg.h"
 
@@ -80,5 +77,3 @@ public:
 };
 
 }
-
-#endif /* QUAD_LEG_H_ */

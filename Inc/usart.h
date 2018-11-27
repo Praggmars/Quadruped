@@ -59,6 +59,11 @@
 
 extern void _Error_Handler(char *, int);
 
+void SendMessageUSART3();
+uint32_t RecvMessageUSART3(uint8_t dst[], uint32_t maxSize);
+void SendMessageUART4();
+uint32_t RecvMessageUART4(uint8_t dst[], uint32_t maxSize);
+
 void MX_UART4_Init(void);
 void MX_USART3_UART_Init(void);
 
