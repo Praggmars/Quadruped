@@ -30,6 +30,8 @@ class Servo
 public:
 	Servo(ServoInitStruct sis);
 
+	void setAssemblyOffset(float o);
+	float getAssemblyOffset();
 	void setState(float r);
 	float getState();
 	void Move(float delta);

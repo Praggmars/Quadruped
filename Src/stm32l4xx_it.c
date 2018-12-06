@@ -207,6 +207,8 @@ void ADC1_2_IRQHandler(void)
 		adcValIndex = 0;
 		if (adcVal[0] < 2500)	//akku merül
 			LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_12);
+		else
+			LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_12);
 	}
 }
 
@@ -233,15 +235,7 @@ void USART3_IRQHandler(void)
 */
 void UART4_IRQHandler(void)
 {
-	if (LL_USART_IsActiveFlag_RXNE(UART4))
-	{
-
-	}
-	if (LL_USART_IsActiveFlag_TXE(UART4))
-	{
-		LL_USART_ClearFlag_TC(UART4);
-		LL_USART_DisableIT_TXE(UART4);
-	}
+	UART4InterruptCallback();
 }
 
 static uint8_t g_updateReady = 0;

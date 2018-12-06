@@ -82,6 +82,7 @@ void MX_UART4_Init(void)
 
   LL_USART_DisableIT_RXNE(UART4);
   LL_USART_DisableIT_TXE(UART4);
+  LL_USART_EnableIT_RXNE(UART4);
 
   while((!(LL_USART_IsActiveFlag_TEACK(UART4))) || (!(LL_USART_IsActiveFlag_REACK(UART4))));
 

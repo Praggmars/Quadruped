@@ -36,6 +36,14 @@ Servo::Servo(ServoInitStruct sis)
 	setState(0.0f);
 }
 
+void Servo::setAssemblyOffset(float o)
+{
+	m_assemblyOffset = o;
+}
+float Servo::getAssemblyOffset()
+{
+	return m_assemblyOffset;
+}
 void Servo::setState(float r)
 {
 	m_state = r + m_assemblyOffset;

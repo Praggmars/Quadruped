@@ -14,6 +14,12 @@ struct QuadAction
 
 class WalkScript
 {
+	util::fifo<QuadAction, 64> m_script;
+	QuadAction m_action;
+	QuadAction m_prevAction;
+	Quadruped& m_quad;
+	float m_time;
+	float m_speed;
 	float m_maxTurnAtOnce;
 	float m_bellyy;
 	float m_legLift;
@@ -21,7 +27,7 @@ class WalkScript
 	float m_legZRetracted;
 	float m_legStretchHalf;
 	bool m_rightBalanced;
-	util::fifo<QuadAction, 64> m_script;
+	bool m_running;
 
 private:
 	void AddPathElementLegMovement(LegID legid, mth::float2 pos);
@@ -32,33 +38,13 @@ private:
 	void AddLegWalkStraightRightBalanced(float ratio);
 	void AddLegWalkStraightLeftBalanced(float ratio);
 	void AddLegBodyElementsWalkStraight(float distance);
-
-public:
-	WalkScript();
-	void AddPathElementTurn(float angle);
-	void AddPathElementWalkStraight(float distance);
-	void AddPathElementCircle(float circleR, float rotation);
-	void Clear();
-	bool NextAction(QuadAction& action);
 	mth::float3 getLegRFStartPos();
 	mth::float3 getLegLFStartPos();
 	mth::float3 getLegRBStartPos();
 	mth::float3 getLegLBStartPos();
 	float getBellyY();
 	float LegY(float t);
-};
-
-class WalkManager
-{
-	float m_time;
-	float m_speed;
-	WalkScript m_script;
-	Quadruped *m_quad;
-	QuadAction m_action;
-	QuadAction m_prevAction;
-	bool m_running;
-
-private:
+	bool NextAction(QuadAction& action);
 	void MoveBody(float deltaTime);
 	void MoveLeg();
 	void ReceiveNextAction();
@@ -66,8 +52,12 @@ private:
 	void ExecuteAction(float deltaTime);
 
 public:
-	void Init(Quadruped *quadruped);
+	WalkScript(Quadruped& q);
+	void AddPathElementTurn(float angle);
+	void AddPathElementWalkStraight(float distance);
+	void AddPathElementCircle(float circleR, float rotation);
+	void Clear();
 	void Update(float deltaTime);
-	WalkScript& getWalkScript();
 };
+
 }
