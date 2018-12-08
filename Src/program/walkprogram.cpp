@@ -173,10 +173,10 @@ void WalkProgram::Loop()
 		}
 		else
 		{
-			/*m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.7f, 1.0f));
-			m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.7f, 1.0f));
-			m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.7f, 1.0f));
-			m_quad.getLegRF().setJointStates(mth::float3(-mth::pi*0.25f, 0.7f, 1.0f));*/
+			m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
+			m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
+			m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
+			m_quad.getLegRF().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
 			//PushUps();
 		}
 	}
